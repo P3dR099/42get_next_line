@@ -6,7 +6,7 @@
 /*   By: pconde-c <pconde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 13:51:52 by pconde-c          #+#    #+#             */
-/*   Updated: 2020/01/28 15:11:37 by pconde-c         ###   ########.fr       */
+/*   Updated: 2020/01/29 16:22:10 by pconde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <fcntl.h>
 #include <sys/uio.h>
 #include <sys/types.h>
-#include "../src/get_next_line.h"
+#include "get_next_line.h"
 
 int main(int argc, char **argv)
 {

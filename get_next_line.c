@@ -6,52 +6,11 @@
 /*   By: pconde-c <pconde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 19:39:48 by pconde-c          #+#    #+#             */
-/*   Updated: 2020/01/28 20:44:17 by pconde-c         ###   ########.fr       */
+/*   Updated: 2020/01/29 17:51:09 by pconde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-static char		*ft_strdup(char const *s1)
-{
-	char	*s2;
-	size_t	i;
-
-	i = 0;
-	while (s1[i])
-		i += 1;
-	if (!(s2 = (char *)malloc(sizeof(char) * (i + 1))))
-		return (NULL);
-	i = -1;
-	while (s1[++i])
-		s2[i] = s1[i],
-	s2[i] = '\0';
-	return (s2);
-}
-
-static char		*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*s3;  // se la hace un malloc con los iteradores i y j + 1
-	char	*tmp_s3; // var tmp a la que se le asigna a s1 y s2
-	size_t	i;	
-	size_t	j;
-
-	j = 0;
-	i = 0;
-	while (s1[i])
-		i += 1;
-	while (s2[j])
-		j += 1;
-	if (!s1 || !s2 || !(s3 = (char *)malloc(sizeof(char) * (i + j + 1))))
-		return (NULL);
-	tmp_s3 = s3;  // Se le asigna la var s3 con la memoria reservada
-	while (*s1 != '\0')
-		*tmp_s3++ = *s1++; 
-	while (*s2 != '\0')
-		*tmp_s3++ = *s2++;
-	*tmp_s3 = '\0';
-	return (s3);
-}
 
 static int		gnl_verify_line(char **stack, char **line)
 {
@@ -67,10 +26,12 @@ static int		gnl_verify_line(char **stack, char **line)
 	tmp_stack = &strchr_stack[i];
 	*tmp_stack = '\0';
 	*line = ft_strdup(*stack);
+	*stack = ft_strdup(tmp_stack + 1);
+	return (1);
 }
 
 
-static int		gnl_readline(int fd, char *heap, char **stack, char **line)
+static int		gnl_read_file(int fd, char *heap, char **stack, char **line)
 {
 	int		ret;
 	char	*tmp_stack;  // var stack temporal
@@ -88,7 +49,36 @@ static int		gnl_readline(int fd, char *heap, char **stack, char **line)
 		else
 			*stack = ft_strdup(heap);
 		if (gnl_verify_line(stack, line))
-			break;
+			break  ;
 	}
 	return (RET_VALUE(ret));
+}
+
+int		get_next_line(int const fd, char **line)
+{
+	static char		*stack[MAX_FD]; // Esta var es doble puntero
+	char			*heap;
+	int				ret;
+	int				i;
+
+	if ( !line || (fd < 0 || fd >= MAX_FD) || (read(fd, stack[fd], 0) < 0) \
+	|| !(heap = (char *)malloc(sizeof(char) * BUFF_SIZE + 1)))
+		return (-1);
+	if (stack[fd])  // Si contiene algo el buffer
+		if (gnl_verify_line(&stack[fd], line))
+			return (1);
+	i = 0;
+	while (i < BUFF_SIZE)
+		heap[i++] = '\0';
+	ret = gnl_read_file(fd, heap, &stack[fd], line);
+	free(heap);
+	if (ret != 0 || stack[fd] == NULL || stack[fd][0] = '\0')
+	{
+		if (!ret && *line)
+			*line = NULL;
+		return (ret);
+	}
+	*line = stack[fd];
+	stack[fd] = NULL;
+	return (1);
 }
