@@ -6,7 +6,7 @@
 /*   By: pconde-c <pconde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 15:31:07 by pconde-c          #+#    #+#             */
-/*   Updated: 2020/01/29 15:40:33 by pconde-c         ###   ########.fr       */
+/*   Updated: 2020/01/30 16:44:21 by pconde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	y retorna un puntero al string
 */
 
-static char		*ft_strdup(char const *s1)
+char	*ft_strdup(char const *s1)
 {
 	char	*s2;
 	size_t	i;
@@ -29,7 +29,7 @@ static char		*ft_strdup(char const *s1)
 		return (NULL);
 	i = -1;
 	while (s1[++i])
-		s2[i] = s1[i],
+		s2[i] = s1[i];
 	s2[i] = '\0';
 	return (s2);
 }
@@ -40,7 +40,7 @@ static char		*ft_strdup(char const *s1)
 **	de s1 y s2. Si la asignacion de memoria falla retorna nulo
 */
 
-static char		*ft_strjoin(char const *s1, char const *s2)
+char		*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*s3;  // e la hace un malloc con los iteradores i y j + 1
 	char	*tmp_s3; // var tmp a la que se le asigna a s1 y s2

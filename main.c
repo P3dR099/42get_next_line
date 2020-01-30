@@ -6,7 +6,7 @@
 /*   By: pconde-c <pconde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 13:51:52 by pconde-c          #+#    #+#             */
-/*   Updated: 2020/01/29 16:22:10 by pconde-c         ###   ########.fr       */
+/*   Updated: 2020/01/30 16:54:12 by pconde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ int main(int argc, char **argv)
 		fd = open(argv[1], O_RDONLY);
 		while ((ret = get_next_line(fd, &buff)) > 0)
                 {
-                        printf("[Return: %d] Line #%d: %s\n", ret, ++line, buff);
+                        printf("%s\n", buff);
                         free(buff);
                 }
-                printf("[Return: %d] Line #%d: %s\n", ret, ++line, buff);
+             //   printf("[Return: %d] Line #%d: %s\n", ret, ++line, buff);
                 if (ret == -1)
                         printf("-----------\nError\n");
                 else if (ret == 0)
